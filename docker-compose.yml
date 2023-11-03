@@ -1,0 +1,10 @@
+version: '3.2'
+
+services:
+  ift-4001-tp2:
+    build: .
+    tty: True
+    volumes:
+      - .:/app
+    env_file:
+      - ./env_files/.env
