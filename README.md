@@ -32,6 +32,14 @@ ou
 python3 -m __main__
 ```
 
+## Références au problème
+
+ci-dessous se trouve une liste de références à la modélisation ou à des pistes de solutions au problème
+
+* https://en.wikipedia.org/wiki/Packing_problems
+* https://www.minizinc.org/doc-2.7.6/en/lib-globals-packing.html
+* https://stackoverflow.com/questions/7392143/python-implementations-of-packing-algorithm
+* https://minizinc-python.readthedocs.io/en/latest/getting_started.html
 
 
 
