@@ -27,7 +27,7 @@ En supposant que vous avez un fichier d'environnement compatible avec votre syst
 ```shell
 python3 .
 ```
-or
+ou
 ```shell
 python3 -m __main__.py
 ```
