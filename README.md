@@ -29,7 +29,7 @@ python3 .
 ```
 ou
 ```shell
-python3 -m __main__.py
+python3 -m __main__
 ```
 
 
