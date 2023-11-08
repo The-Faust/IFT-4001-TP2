@@ -1,5 +1,9 @@
 include "globals.mzn";
 include "data1.dzn";
+%le dernier objet dans valid_shapes doit correspondre à un rectangle vide.
+%valid_shapes contient l'ensemble des rotations possibles pour un objet, les objets sont ordonnés du plus grand au plus petit.
+%c'est plus optimal d'avoir le minimum de rectangles
+
 % constantes
 int: k;
 int: nObjects;
@@ -31,7 +35,6 @@ constraint forall (obj in OBJECTS) (
     if(obj >chosen_objects_count) then kind[obj] = nShapes else kind[obj] in valid_shapes[chosen_objects[obj]] /\ not(kind[obj]==nShapes) endif 
 );
 constraint geost_bb(k,rect_size,rect_offset,shape,x,kind,l,u);
-
 
 constraint surface = sum(i in 1..nObjects, j in 1..length(shape[valid_shapes[i][1]]))(if i in chosen_objects then 
 rect_size[shape[valid_shapes[i][1]][j], 1]*rect_size[shape[valid_shapes[i][1]][j], 2] else 0 endif);
