@@ -1,7 +1,9 @@
 k =2;
 nObjects =5;
 nRectangles =15;
-nShapes =12; 
+nShapes =12;
+
+% 1st rectangle de largeur 4 et hauteur 2
 rect_size = [|
      4, 2|
      2, 4|
@@ -22,6 +24,7 @@ rect_size = [|
      3, 4|
      0,0|];
 
+% Dans la forme le rectangle est à quelle position
 rect_offset = [|
      0, 0|
      0, 0|
@@ -41,7 +44,8 @@ rect_offset = [|
      0, 0|
      0, 0|
      0,0|];
-     
+
+% énumération des rectangles par exemple {14} = rect_size[14]
 shape = [
     {14},
 
@@ -60,6 +64,8 @@ shape = [
    
     {15}
 ];
+
+% formes plus petites que le sac à dos?
 valid_shapes = [{1}, {2, 3, 4, 5},{6, 7, 8, 9},{10, 11},{12}];
 l = [0, 0];
 u = [4, 4];
