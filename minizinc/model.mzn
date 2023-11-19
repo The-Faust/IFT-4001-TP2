@@ -15,17 +15,21 @@ set of int: OBJECTS    = 1..nObjects;
 set of int: RECTANGLES = 1..nRectangles;
 set of int: SHAPES     = 1..nShapes;
 
+% coordonnées du coin supérieur gauche de notre "sac"
 array[DIMENSIONS] of int:             l;
+% coordonnées du coin inférieur droite de notre "sac"
 array[DIMENSIONS] of int:             u;
+
 array[RECTANGLES,DIMENSIONS] of int:  rect_size;
 array[RECTANGLES,DIMENSIONS] of int:  rect_offset;
 array[SHAPES] of set of RECTANGLES:   shape;
 array[OBJECTS] of set of SHAPES: valid_shapes;
- %variables
+%variables
 array[OBJECTS,DIMENSIONS] of var int: x;
 array[OBJECTS] of var SHAPES:         kind;
 array[OBJECTS] of var OBJECTS: chosen_objects;
-var 0..nObjects : chosen_objects_count; 
+var 0..nObjects : chosen_objects_count;
+
 var 0..u[1]*u[1] : surface;
 
 %contraintes
