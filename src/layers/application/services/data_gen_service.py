@@ -1,5 +1,5 @@
 import logging
-from typing import Iterable, Tuple
+from typing import Iterable, Tuple, Set
 
 from numpy.random import randint, choice
 
@@ -64,5 +64,13 @@ class DataGenService:
     ) -> Iterable[Tuple[int, int]]:
         pass
 
-    def generate_rectangles(self, max_size: int, n: int) -> Iterable[Tuple[int, int]]:
-        return ((randint(1, max_size), randint(1, max_size)) for _ in range(n))
+    def generate_rectangles(self, max_size: int, n: int) -> Set[Tuple[int, int]]:
+        return {rec for _ in range(n) for rec in self.make_rectangle(max_size)}
+
+    def make_rectangle(self, max_size: int) -> Iterable[Tuple[int, int]]:
+        a = randint(1, max_size)
+        b = randint(1, max_size)
+
+        yield (a, b)
+        yield (b, a)
+
