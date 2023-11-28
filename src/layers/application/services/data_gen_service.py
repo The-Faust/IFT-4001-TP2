@@ -64,12 +64,12 @@ class DataGenService:
     ) -> Iterable[Tuple[int, int]]:
         pass
 
-    def generate_rectangles(self, max_size: int, n: int) -> Set[Tuple[int, int]]:
-        return {rec for _ in range(n) for rec in self.make_rectangle(max_size)}
+    def generate_rectangles(self, max_area: int, n: int) -> Set[Tuple[int, int]]:
+        return {rec for _ in range(n) for rec in self.make_rectangle(max_area)}
 
-    def make_rectangle(self, max_size: int) -> Iterable[Tuple[int, int]]:
-        a = randint(1, max_size)
-        b = randint(1, max_size)
+    def make_rectangle(self, max_area: int) -> Iterable[Tuple[int, int]]:
+        a = randint(1, max_area)
+        b = randint(1, max_area - a)
 
         yield (a, b)
         yield (b, a)
