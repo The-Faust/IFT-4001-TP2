@@ -26,7 +26,7 @@ array[OBJECTS,DIMENSIONS] of var int: x;
 array[OBJECTS] of var SHAPES:         kind;
 array[OBJECTS] of var OBJECTS: chosen_objects;
 var 0..nObjects : chosen_objects_count; 
-var 0..u[1]*u[1] : surface;
+var 0..(u[1]-l[1])*(u[2]-l[2]) : surface;
 
 %contraintes
 constraint if chosen_objects_count < nObjects then forall(i in chosen_objects_count +1 ..nObjects )(chosen_objects[i]=nObjects) endif;
@@ -41,5 +41,7 @@ rect_size[shape[valid_shapes[i][1]][j], 1]*rect_size[shape[valid_shapes[i][1]][j
 
 constraint increasing(chosen_objects);
 constraint (x[1,1]<= ceil(l[1]/2) /\ x[1,2]<= ceil(u[1]/2));
+
+%constraint x[1,1]<= ceil((u[1]-l[1])/2) /\ x[1,2]<= ceil((u[2]-l[2])/2);
 
 solve :: int_search(chosen_objects, smallest, indomain_min  , complete) maximize surface;
