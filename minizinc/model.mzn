@@ -40,5 +40,6 @@ constraint surface = sum(i in 1..nObjects, j in 1..length(shape[valid_shapes[i][
 rect_size[shape[valid_shapes[i][1]][j], 1]*rect_size[shape[valid_shapes[i][1]][j], 2] else 0 endif);
 
 constraint increasing(chosen_objects);
+constraint (x[1,1]<= ceil(l[1]/2) /\ x[1,2]<= ceil(u[1]/2));
 
 solve :: int_search(chosen_objects, smallest, indomain_min  , complete) maximize surface;

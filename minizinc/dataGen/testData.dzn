@@ -1,0 +1,4 @@
+dimensions =2;
+nShapes  =3;
+surfacePerShape =         [20,15,3];
+rectanglesCountPerShape = [10,6,2];
