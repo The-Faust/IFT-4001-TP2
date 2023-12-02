@@ -1,3 +1,4 @@
+boundingBox = [50,60];
 dimensions =2;
 nShapes  =3;
 surfacePerShape =         [20,15,3];
