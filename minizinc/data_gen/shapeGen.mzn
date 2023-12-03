@@ -1,5 +1,5 @@
 include "globals.mzn";
-include "testData.dzn";
+
 %rectangles par shapes, les indices des rectangles par shape
 %offset des rectangles 
 %grosseur des rectangles
