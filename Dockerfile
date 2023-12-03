@@ -9,10 +9,10 @@ RUN apt-get update &&\
 	rm -rf /var/lib/apt/lists/* && \
 	mkdir /tool && \
 	cd /tool && \
-	wget https://github.com/MiniZinc/MiniZincIDE/releases/download/2.8.1/MiniZincIDE-2.8.1-bundle-linux-x86_64.tgz && \
-	tar -zxvf MiniZincIDE-2.8.1-bundle-linux-x86_64.tgz && \
-	mv /tool/MiniZincIDE-2.8.1-bundle-linux-x86_64 /tool/MiniZincIDE && \
-	rm -rf MiniZincIDE-2.8.1-bundle-linux-x86_64.tgz
+	wget https://github.com/MiniZinc/MiniZincIDE/releases/download/2.7.6/MiniZincIDE-2.7.6-bundle-linux-x86_64.tgz && \
+	tar -zxvf MiniZincIDE-2.7.6-bundle-linux-x86_64.tgz && \
+	mv /tool/MiniZincIDE-2.7.6-bundle-linux-x86_64 /tool/MiniZincIDE && \
+	rm -rf MiniZincIDE-2.7.6-bundle-linux-x86_64.tgz
 
 ENV PATH "$PATH:/tool/MiniZincIDE/bin"
 ENV LD_LIBRARY_PATH "$LD_LIBRARY_PATH:/tool/MiniZincIDE/lib"
