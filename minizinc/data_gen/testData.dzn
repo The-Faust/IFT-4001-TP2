@@ -1,5 +1,5 @@
 boundingBox = [50,60];
-dimensions =2;%enlever le concept de dimension et mettre 2 partout
+dimensions =2; %enlever le concept de dimension et mettre 2 partout
 nShapes  =3;
 surfacePerShape =         [20,15,3];
 rectanglesCountPerShape = [10,6,2];

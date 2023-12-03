@@ -1,4 +1,21 @@
-FROM continuumio/miniconda3:22.11.1
+FROM continuumio/miniconda3:latest
+
+# found this code snippet at the following repository: https://github.com/jacopoMauro/minizinc/blob/master/Dockerfile
+RUN apt-get update &&\
+	apt-get -y install \
+		git \
+		wget \
+		libgl1 && \
+	rm -rf /var/lib/apt/lists/* && \
+	mkdir /tool && \
+	cd /tool && \
+	wget https://github.com/MiniZinc/MiniZincIDE/releases/download/2.8.1/MiniZincIDE-2.8.1-bundle-linux-x86_64.tgz && \
+	tar -zxvf MiniZincIDE-2.8.1-bundle-linux-x86_64.tgz && \
+	mv /tool/MiniZincIDE-2.8.1-bundle-linux-x86_64 /tool/MiniZincIDE && \
+	rm -rf MiniZincIDE-2.8.1-bundle-linux-x86_64.tgz
+
+ENV PATH "$PATH:/tool/MiniZincIDE/bin"
+ENV LD_LIBRARY_PATH "$LD_LIBRARY_PATH:/tool/MiniZincIDE/lib"
 
 WORKDIR /app
 
