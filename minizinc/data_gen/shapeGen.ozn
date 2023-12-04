@@ -1,0 +1,11 @@
+output ["\"output\": {","\"dzn\": ",showJSON(concat(["rectanglesCount = ",showDzn(rectanglesCount),";\n","rect_size = \n",let {array [int] of string: idx1 = [], array [int] of string: idx2 = [], array [int,int] of string: x = [(i, j) : showDzn(rect_size[i,j]) | i in 1..19, j in 1..2]} in (show2d_indexed(idx1,idx2,x)),";\n","rect_offset = \n",let {array [int] of string: idx1 = [], array [int] of string: idx2 = [], array [int,int] of string: x = [(i, j) : showDzn(rect_offset[i,j]) | i in 1..19, j in 1..2]} in (show2d_indexed(idx1,idx2,x)),";\n","real_rect_offset = \n",let {array [int] of string: idx1 = [], array [int] of string: idx2 = [], array [int,int] of string: x = [(i, j) : showDzn(real_rect_offset[i,j]) | i in 1..19, j in 1..2]} in (show2d_indexed(idx1,idx2,x)),";\n","shape = \n",let {array [int] of string: idx1 = [], array [int] of string: idx2 = [], array [int,int] of string: x = [(i, j) : showDzn(shape[i,j]) | i in 1..3, j in 1..10]} in (show2d_indexed(idx1,idx2,x)),";\n","rect_edges = \n",let {array [int] of string: idx1 = [], array [int] of string: idx2 = [], array [int,int] of string: x = [(i, j) : showDzn(rect_edges[i,j]) | i in 1..19, j in 1..4]} in (show2d_indexed(idx1,idx2,x)),";\n"])),"}, \"sections\": [\"dzn\"]"];
+set of int: RECTANGLES = 1..19;
+array [RECTANGLES,1..4] of int: rect_edges;
+set of int: RECTPERSHAPE = 1..10;
+set of int: SHAPES = 1..3;
+array [SHAPES,RECTPERSHAPE] of int: shape;
+set of int: DIMENSIONS = 1..2;
+array [RECTANGLES,DIMENSIONS] of int: real_rect_offset;
+array [RECTANGLES,DIMENSIONS] of int: rect_offset;
+array [RECTANGLES,DIMENSIONS] of int: rect_size;
+int: rectanglesCount;

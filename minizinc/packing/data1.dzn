@@ -1,10 +1,10 @@
-k =2;
+
 nObjects =5;
 nRectangles =15;
 nShapes =12;
 
 % le premier rectangle est de largeur 4 et hauteur 2
-rect_size = [|
+rectSize = [|
      4, 2|
      2, 4|
      4, 2|
@@ -25,7 +25,7 @@ rect_size = [|
      0,0|];
 
 % Dans la forme le rectangle est à quelle position
-rect_offset = [|
+rectOffset = [|
      0, 0|
      0, 0|
      0, 2|
@@ -69,6 +69,6 @@ shape = [
 % formes plus petites que le sac à dos, avec leur rotations
 %   par exemple valid_shapes[2] est {2, 3, 4, 5}
 %   et 2, 3, 4, 5 sont les rotations valides de la forme dans la liste shapes en haut
-valid_shapes = [{1}, {2, 3, 4, 5},{6, 7, 8, 9},{10, 11},{12}];
+validShapes = [{1}, {2, 3, 4, 5},{6, 7, 8, 9},{10, 11},{12}];
 l = [0, 0];
 u = [4, 4];
