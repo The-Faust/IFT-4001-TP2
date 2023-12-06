@@ -5,6 +5,7 @@ from pathlib import Path
 from minizinc.driver import Driver
 
 from src.layers.application.services.data_gen_service import DataGenService
+from src.layers.application.services.packing_service import PackingService
 
 
 logging.basicConfig()
@@ -16,12 +17,17 @@ def main():
     # my_driver = Driver(path_to_driver)
     # my_driver.make_default()
 
-    def test_datagen():
+    def datagen():
         data_gen_service = DataGenService()
-        data_gen_service.generate()
+        return data_gen_service.generate()
 
-    test_datagen()
+    data = datagen()
+    print(data);
+    def packing(_data):
+        packing_service = PackingService()
+        return packing_service.solve(_data)
 
+    print(packing(data))
 
 if __name__ == "__main__":
     main()

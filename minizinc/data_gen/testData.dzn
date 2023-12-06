@@ -1,5 +1,9 @@
-boundingBox = [50,60];
-dimensions =2; %enlever le concept de dimension et mettre 2 partout
-nShapes  =3;
-surfacePerShape =         [20,15,3];
-rectanglesCountPerShape = [10,6,2];
+%boundingBox = [50,60];
+%nShapes  =3;
+%surfacePerShape =         [20,15,3];
+%rectanglesCountPerShape = [10,6,2];
+
+boundingBox=[4, 4];
+nShapes=14;
+surfacePerShape=[2, 6, 6, 3, 4, 6, 3, 3, 3, 3, 1, 9, 6, 3];
+rectanglesCountPerShape=[1, 4, 1, 1, 1, 1, 2, 2, 2, 2, 1, 6, 2, 1];
