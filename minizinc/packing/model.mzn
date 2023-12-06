@@ -46,4 +46,4 @@ constraint increasing(chosen_objects);
 constraint (x[1,1]<= ceil(u[1]/2) /\ x[1,2]<= ceil(u[2]/2));
 
 
-solve :: int_search(chosen_objects, smallest, indomain_min  , complete) maximize surface;
+solve :: int_search(chosen_objects, first_fail, indomain_min , complete) maximize surface;

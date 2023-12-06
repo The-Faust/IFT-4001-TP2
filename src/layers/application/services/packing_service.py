@@ -27,21 +27,8 @@ class PackingService:
         #
         for key in data.keys():
             instance[key] = data[key]
-        # rectSize: List[List[int, int]] = [[1, 1], [1, 1]]
-
-        # instance["nObjects"] = 1
-        # instance["nRectangles"] = 1
-        # instance["nShapes"] = 1
-        # instance["rectSize"] = [[1,1]]#data["rectSize"]
-        # instance["rectOffset"] = [[1,1]]#data["rectOffset"]
-        # instance["shape"] = data["shape"]
-        # instance["validShapes"] = data["validShapes"]
-        # instance["l"] = [0,0]
-        # instance["u"] = [10,10]
-
 
         solution = instance.solve(timeout=timedelta(timeout), free_search=True)
-        print(solution)
 
         return solution
 

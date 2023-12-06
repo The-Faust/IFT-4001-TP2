@@ -27,7 +27,7 @@ def main():
         packing_service = PackingService()
         return packing_service.solve(_data)
 
-    packing(data)
+    print(packing(data))
 
 if __name__ == "__main__":
     main()
