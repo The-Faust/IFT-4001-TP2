@@ -1,10 +1,10 @@
 import logging
 from datetime import timedelta
 from pathlib import Path
-from typing import Tuple, Union, List
+from typing import Union
 
 from minizinc import Solver, Instance, Model
-from numpy.random import randint
+
 
 from src.layers.application.factories.packing_model_factory import PackingModelFactory
 
@@ -21,8 +21,7 @@ class PackingService:
             files: Union[str, Path] = None
     )-> any:
         solver = Solver.lookup(solver)
-        #model = self.packing_model_factory.make_packing_model(files)
-        model = Model("minizinc/packing/model.mzn")
+        model = self.packing_model_factory.make_packing_model()
         instance = Instance(solver, model)
         #
         for key in data.keys():

@@ -1,8 +1,4 @@
 import logging
-from os import listdir
-from pathlib import Path
-
-from minizinc.driver import Driver
 
 from src.layers.application.services.data_gen_service import DataGenService
 from src.layers.application.services.packing_service import PackingService
@@ -13,13 +9,10 @@ logging.getLogger().setLevel(logging.DEBUG)
 
 
 def main():
-    # path_to_driver = Path('/minizinc', 'bin')
-    # my_driver = Driver(path_to_driver)
-    # my_driver.make_default()
 
     def datagen():
         data_gen_service = DataGenService()
-        return data_gen_service.generate()
+        return data_gen_service.generate_packing_model_inputs()
 
     data = datagen()
     print(data);
