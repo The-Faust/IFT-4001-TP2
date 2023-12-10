@@ -1,12 +1,12 @@
 import logging
 from datetime import timedelta
-from pathlib import Path
-from typing import Union
+from typing import Dict
 
-from minizinc import Solver, Instance, Model
-
+from minizinc import Solver, Instance, Result
 
 from src.layers.application.factories.packing_model_factory import PackingModelFactory
+from src.layers.domain.inputs import PackingModelInput
+
 
 class PackingService:
     def __init__(self):
@@ -15,17 +15,24 @@ class PackingService:
 
     def solve(
             self,
-            data : dict,
+            packing_model_inputs: PackingModelInput,
             solver: str = 'chuffed',
             timeout: int = 600,
-            files: Union[str, Path] = None
-    )-> any:
+    ) -> Result:
         solver = Solver.lookup(solver)
         model = self.packing_model_factory.make_packing_model()
         instance = Instance(solver, model)
-        #
-        for key in data.keys():
-            instance[key] = data[key]
+
+        #  Il est mieux d'être clair lorsqu'on interagi avec minizinc sur quelle valeur est quoi
+        instance['nObjects'] = packing_model_inputs.nObjects
+        instance['nRectangles'] = packing_model_inputs.nRectangles
+        instance['nShapes'] = packing_model_inputs.nShapes
+        instance['rectSize'] = packing_model_inputs.rectSize
+        instance['rectOffset'] = packing_model_inputs.rectOffset
+        instance['shape'] = packing_model_inputs.shape
+        instance['validShapes'] = packing_model_inputs.validShapes
+        instance['l'] = packing_model_inputs.l
+        instance['u'] = packing_model_inputs.u
 
         solution = instance.solve(timeout=timedelta(timeout), free_search=True)
 

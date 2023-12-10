@@ -50,8 +50,9 @@ class PackingProblemDbService:
             .filter(PackingModelInputTable.batch_id == batch_id)\
             .filter(PackingModelInputTable.shape_gen_input_id == shape_gen_input_id) \
             .all()
+        out_rows = [self.row_factory.convert_packing_model_input_rows_to_dataclass(row.__dict__) for row in out_rows]
 
-        return [row.__dict__ for row in out_rows]
+        return out_rows
 
     def write_shape_gen_model_inputs_to_table(
         self,

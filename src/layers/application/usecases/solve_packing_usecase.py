@@ -59,5 +59,11 @@ class SolvePackingUseCase:
                 write_to_db=write_to_db
             ) for shape_gen_input_id, packing_model_input in packing_model_inputs
         ]
+        #  flatten them inputs
+        packing_model_input_rows = [row for shape_gen_row in packing_model_input_rows for row in shape_gen_row]
+
+        packing_solutions = [self.packing_service.solve(row['inputs']) for row in packing_model_input_rows]
+
+        self.logger.debug(packing_solutions)
 
         return []

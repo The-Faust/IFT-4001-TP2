@@ -1,6 +1,6 @@
 import logging
 from datetime import datetime
-from typing import Iterable
+from typing import Iterable, Dict
 from uuid import uuid4
 
 from src.layers.domain.dtos import ShapeGenInputDto
@@ -12,6 +12,15 @@ from src.layers.domain.tables.packing_problem.shape_gen_model_input_table import
 class PackingProblemDbRowFactory:
     def __init__(self):
         self.logger = logging.getLogger(__name__)
+
+    def convert_packing_model_input_rows_to_dataclass(self, packing_model_input_row: Dict[str, any]) -> Dict[str, any]:
+        packing_model_input = packing_model_input_row['inputs']
+        packing_model_input['shape'] = [set(s) for s in packing_model_input['shape']]
+        packing_model_input['validShapes'] = [set(vs) for vs in packing_model_input['validShapes']]
+
+        packing_model_input_row['inputs'] = PackingModelInput(**packing_model_input)
+
+        return packing_model_input_row
 
     def make_packing_model_input_rows(
         self,
