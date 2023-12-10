@@ -113,25 +113,29 @@ class DataGenService:
         rectangles_count_per_shape: List[int] = instance["rectanglesCountPerShape"]
         rect_size: List[List[int]] = solution["rect_size"][:n_rect]
         rect_offset: List[List[int, int]] = solution["real_rect_offset"][:n_rect]
-        shape: List[Set[int]] = [set(solution["shape"][i][:rectangles_count_per_shape[i]]) for i in range(n_objects)]
-        valid_shapes: [{int}] = [{i + 1} for i in range(n_objects)]
+        shape_list: List[List[int]] = [list(solution["shape"][i][:rectangles_count_per_shape[i]]) for i in range(n_objects)]
+        valid_shapes_list: List[List[int]] = [[i + 1] for i in range(n_objects)]
 
-        self.shape_factory.remove_duplicates(rect_size, rect_offset, shape, valid_shapes)
-        # self.shape_factory.rotate_shapes(shape, rect_size, rect_offset, valid_shapes)
+        self.shape_factory.remove_duplicates(rect_size, rect_offset, shape_list, valid_shapes_list)
+        self.shape_factory.rotate_shapes(rect_size, rect_offset,shape_list, valid_shapes_list)
+
 
         # on ajoute la shape vide
         rect_size.append([0, 0])
         rect_offset.append([0, 0])
         n_rect = len(rect_size)
-        shape.append({n_rect})
-        n_shapes: int = len(shape)
-        valid_shapes.append({n_shapes})
+        shape_list.append([n_rect])
+        n_shapes: int = len(shape_list)
+        valid_shapes_list.append([n_shapes])
         n_objects += 1
 
         # sort valid shapes de la plus grande surface a la plus petite
-        valid_shapes.sort(key=lambda x: sum(
-            rect_size[list(shape[list(x)[0] - 1])[i] - 1][0] * rect_size[list(shape[list(x)[0] - 1])[i] - 1][1]
-            for i in range(len(shape[list(x)[0] - 1]))), reverse=True)
+        valid_shapes_list.sort(key=lambda x: sum(
+            rect_size[shape_list[x[0] - 1][i] - 1][0] * rect_size[shape_list[x[0] - 1][i] - 1][1]
+            for i in range(len(shape_list[x[0] - 1]))), reverse=True)
+
+        shape : List[Set[int]] = [set(s) for s in shape_list]
+        valid_shapes: List[Set[int]] = [set(vs) for vs in valid_shapes_list]
 
         return PackingModelInputDto([
             n_objects, n_rect, n_shapes,
