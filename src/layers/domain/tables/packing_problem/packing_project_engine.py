@@ -9,7 +9,7 @@ class PackingProjectEngine:
 
         base: PostgresBase = PostgresBase()
 
-        self.engine = base.get_engine('packing_problem')
+        self.engine = base.get_engine()
 
     def serve_engine(self):
         return self.engine

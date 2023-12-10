@@ -17,13 +17,13 @@ class PostgresBase:
 
         return metadata, base
 
-    def get_engine(self, database: str) -> Engine:
+    def get_engine(self) -> Engine:
         # TODO: Si temps mettre ces info dans un fichier de configuration
         user = 'postgres'
         password = 'postgres123'
-        host = 'postgtres'
+        host = 'postgres'
         port = 5432
-        database = 'packing_problem'
+        database = 'postgres'
 
         conn_str = f'postgresql://{user}:{password}@{host}:{port}/{database}'
         engine = create_engine(conn_str)

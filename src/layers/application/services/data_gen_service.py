@@ -23,17 +23,20 @@ class DataGenService:
 
     def generate_packing_model_inputs(
         self,
+        shape_gen_model_input: Dict[str, any],
         solver: str = 'chuffed',
-        min_bounding_box_limits: Tuple[int, int] = (4, 4),
-        max_bounding_box_limits: Tuple[int, int] = (5, 5),
         timeout: int = 600,
         files: Union[str, Path] = None
     ) -> PackingModelInput:
         solver = Solver.lookup(solver)
         model = self.shape_gen_model_factory.make_data_gen_model(files)
 
-        (bounding_box, n_shapes, surface_per_shapes, rectangles_count_per_shape) = self \
-            .randomly_generate_shape_model_input(min_bounding_box_limits, max_bounding_box_limits)
+        self.logger.debug(shape_gen_model_input)
+
+        bounding_box = shape_gen_model_input['bounding_box']
+        n_shapes = shape_gen_model_input['n_shapes']
+        surface_per_shapes = shape_gen_model_input['surface_per_shapes']
+        rectangles_count_per_shape = shape_gen_model_input['rectangles_count_per_shape']
 
         self.logger.debug(
             f'bounding_box={bounding_box}\n'
@@ -43,10 +46,10 @@ class DataGenService:
         )
 
         instance = Instance(solver, model)
-        instance["boundingBox"] = bounding_box  # [4, 3]
-        instance["nShapes"] = n_shapes  # 4
-        instance["surfacePerShape"] = surface_per_shapes  # [3, 4, 1, 2]
-        instance["rectanglesCountPerShape"] = rectangles_count_per_shape  # [2, 2, 1, 1]
+        instance["boundingBox"] = bounding_box
+        instance["nShapes"] = n_shapes
+        instance["surfacePerShape"] = surface_per_shapes
+        instance["rectanglesCountPerShape"] = rectangles_count_per_shape
 
         solution = instance.solve(timeout=timedelta(timeout), free_search=True)
 
@@ -72,7 +75,6 @@ class DataGenService:
         self,
         min_bounding_box_limits: Tuple[int, int],
         max_bounding_box_limits: Tuple[int, int],
-        input_store: List[ShapeGenInputDto] = False
     ) -> ShapeGenInputDto:
         bounding_box: List[int] = list([
             randint(min_bounding_box_limits[0], max_bounding_box_limits[0]),
@@ -102,11 +104,7 @@ class DataGenService:
             rectangles_count_per_shape
         ])
 
-        if input_store:
-            if input_store[0] == -1:
-                input_store = [shape_gen_dto]
-            else:
-                input_store = [shape_gen_dto, *input_store]
+        self.logger.debug(shape_gen_dto)
 
         return shape_gen_dto
 

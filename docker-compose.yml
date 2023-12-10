@@ -8,6 +8,8 @@ services:
       - .:/app
     env_file:
       - ./env_files/.env
+    links:
+      - postgres
 
   postgres:
     image: postgres:latest
@@ -17,5 +19,14 @@ services:
       - POSTGRES_PASSWORD=postgres123
     ports:
       - '5432:5432'
-    volumes:
-      - postgres_db:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    ports:
+      - '8888:80'
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    depends_on:
+      - postgres
