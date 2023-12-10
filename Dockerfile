@@ -21,7 +21,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN conda env create -f ift_4001_tp2.yml
+RUN conda env create -f ift-4001-tp2.yml
 
 ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "ift-4001-tp2"]
 
