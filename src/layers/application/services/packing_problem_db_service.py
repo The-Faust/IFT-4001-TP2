@@ -45,7 +45,13 @@ class PackingProblemDbService:
         if write_to_db:
             self.postgres_repository.commit()
 
-        return rows
+        out_rows = self.postgres_repository.session \
+            .query(PackingModelInputTable)\
+            .filter(PackingModelInputTable.batch_id == batch_id)\
+            .filter(PackingModelInputTable.shape_gen_input_id == shape_gen_input_id) \
+            .all()
+
+        return [row.__dict__ for row in out_rows]
 
     def write_shape_gen_model_inputs_to_table(
         self,

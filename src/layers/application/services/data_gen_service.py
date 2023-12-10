@@ -38,13 +38,6 @@ class DataGenService:
         surface_per_shapes = shape_gen_model_input['surface_per_shapes']
         rectangles_count_per_shape = shape_gen_model_input['rectangles_count_per_shape']
 
-        self.logger.debug(
-            f'bounding_box={bounding_box}\n'
-            f'n_shapes={n_shapes}\n'
-            f'surface_per_shapes={surface_per_shapes}\n'
-            f'rectangles_count_per_shape={rectangles_count_per_shape}'
-        )
-
         instance = Instance(solver, model)
         instance["boundingBox"] = bounding_box
         instance["nShapes"] = n_shapes
@@ -52,6 +45,8 @@ class DataGenService:
         instance["rectanglesCountPerShape"] = rectangles_count_per_shape
 
         solution = instance.solve(timeout=timedelta(timeout), free_search=True)
+
+        self.logger.debug(solution)
 
         (n_objects, n_rect, n_shapes, rect_size, rect_offset, shape, valid_shapes, l, u) = self \
             .produce_packing_model_input(instance, solution)
@@ -122,7 +117,7 @@ class DataGenService:
         valid_shapes: [{int}] = [{i + 1} for i in range(n_objects)]
 
         self.shape_factory.remove_duplicates(rect_size, rect_offset, shape, valid_shapes)
-        self.shape_factory.rotate_shapes(shape, rect_size, rect_offset, valid_shapes)
+        # self.shape_factory.rotate_shapes(shape, rect_size, rect_offset, valid_shapes)
 
         # on ajoute la shape vide
         rect_size.append([0, 0])

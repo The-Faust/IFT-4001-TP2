@@ -32,12 +32,21 @@ class PackingProblemDbRowFactory:
         shape_gen_input_id: uuid4,
         packing_model_input: PackingModelInput
     ) -> PackingModelInputTable:
+        arguments_to_modify = ['shape', 'validShapes']
+
+        inputs = {k: v for k, v in packing_model_input.__dict__.items() if k not in arguments_to_modify}
+        inputs = {
+            'shape': [list(s) for s in packing_model_input.shape],
+            'validShapes': [list(vs) for vs in packing_model_input.validShapes],
+            **inputs
+        }
+
         row_arguments = dict(
             batch_name=batch_name,
             batch_id=batch_id,
             shape_gen_input_id=shape_gen_input_id,
             input_id=uuid4(),
-            inputs=packing_model_input.__dict__,
+            inputs=inputs,
             generation_time=datetime.now()
         )
 
