@@ -6,7 +6,7 @@ from minizinc.driver import Driver
 
 from src.layers.application.services.data_gen_service import DataGenService
 from src.layers.application.services.packing_service import PackingService
-
+from src.layers.application.services.visualisation_service import VisualisationService
 
 logging.basicConfig()
 logging.getLogger().setLevel(logging.DEBUG)
@@ -22,12 +22,19 @@ def main():
         return data_gen_service.generate()
 
     data = datagen()
-    print(data);
+    visualisateur = VisualisationService()
+    visualisateur.set_shape_infos(data['rectSize'],data['rectOffset'],data['shape'],data['validShapes'])
+    visualisateur.draw_all_shape()
+    print(data)
     def packing(_data):
         packing_service = PackingService()
         return packing_service.solve(_data)
 
-    print(packing(data))
+    solution = packing(data)
+    print(solution)
+    
+    
+    
 
 if __name__ == "__main__":
     main()

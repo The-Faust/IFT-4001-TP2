@@ -78,6 +78,15 @@ class VisualisationService:
         
         return max_x
     
+    def min_x_shape(self,shape_index):
+        min_x = np.inf
+        for rectangle_index in self.shape[shape_index-1]:
+            rectangle_index -= 1
+            if (x:= self.rect_offset[rectangle_index][0]) < min_x:
+                min_x = x
+        
+        return min_x
+    
     def max_y_shape(self,shape_index):
         max_y = 0
         for rectangle_index in self.shape[shape_index-1]:
@@ -87,6 +96,15 @@ class VisualisationService:
         
         return max_y
     
+    def min_y_shape(self,shape_index):
+        min_y = np.inf
+        for rectangle_index in self.shape[shape_index-1]:
+            rectangle_index -= 1
+            if (y:= self.rect_offset[rectangle_index][1]) < min_y:
+                min_y = y
+        
+        return min_y
+    
     def draw_all_shape(self):
         x_offset = 2
         y_offset = 2
@@ -94,18 +112,17 @@ class VisualisationService:
         for shape_indexes in self.valid_shapes:
             shape_index = list(shape_indexes)[0]
             max_x = self.max_x_shape(shape_index)
-            if x_offset+max_x > self.x_lim:
-                x_offset = 2
-                y_offset += np.max(list_y) + 2
-                list_y = []
+            min_x = self.min_x_shape(shape_index)
+            min_y = self.min_y_shape(shape_index)
+            if min_x != max_x :
+                if x_offset+max_x > self.x_lim:
+                    x_offset = 2
+                    y_offset += np.max(list_y) + 2
+                    list_y = []
            
-            self.draw_shape(x_offset, y_offset, shape_index)
-            list_y.append(self.max_y_shape(shape_index))
-            x_offset += max_x +2
-                
-                
-        plt.subplots_adjust(0,0.02,1,0.99)
-        plt.show()
+                self.draw_shape(x_offset-min_x, y_offset-min_y, shape_index)
+                list_y.append(self.max_y_shape(shape_index))
+                x_offset += max_x +2 - min_x
                 
                 
         plt.subplots_adjust(0,0.02,1,0.99)
