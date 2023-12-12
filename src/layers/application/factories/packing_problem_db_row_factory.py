@@ -5,13 +5,31 @@ from uuid import uuid4
 
 from src.layers.domain.dtos import ShapeGenInputDto
 from src.layers.domain.inputs import PackingModelInput
+from src.layers.domain.solutions import PackingModelSolution
 from src.layers.domain.tables.packing_problem.packing_model_input_table import PackingModelInputTable
+from src.layers.domain.tables.packing_problem.packing_model_solution_table import PackingModelSolutionTable
 from src.layers.domain.tables.packing_problem.shape_gen_model_input_table import ShapeGenModelInputTable
 
 
 class PackingProblemDbRowFactory:
     def __init__(self):
         self.logger = logging.getLogger(__name__)
+
+    def make_packing_model_solution_row(
+        self,
+        batch_name: str,
+        batch_id: uuid4,
+        packing_model_input_id: uuid4,
+        packing_model_solution: PackingModelSolution
+    ) -> Iterable[PackingModelSolutionTable]:
+        return [PackingModelSolutionTable(
+            batch_name=batch_name,
+            batch_id=batch_id,
+            packing_model_input_id=packing_model_input_id,
+            input_id=uuid4(),
+            inputs=packing_model_solution.__dict__,
+            generation_time=datetime.now()
+        )]
 
     def convert_packing_model_input_rows_to_dataclass(self, packing_model_input_row: Dict[str, any]) -> Dict[str, any]:
         packing_model_input = packing_model_input_row['inputs']
