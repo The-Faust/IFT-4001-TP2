@@ -5,6 +5,7 @@ from matplotlib import pyplot as plt
 
 from minizinc.driver import Driver
 
+from src.layers.application.usecases.solve_packing_usecase import SolvePackingUseCase
 from src.layers.application.services.data_gen_service import DataGenService
 from src.layers.application.services.packing_service import PackingService
 from src.layers.application.services.visualisation_service import VisualisationService
@@ -14,31 +15,14 @@ logging.getLogger().setLevel(logging.DEBUG)
 
 
 def main():
-    # path_to_driver = Path('/minizinc', 'bin')
-    # my_driver = Driver(path_to_driver)
-    # my_driver.make_default()
+    def test_generate_shape_gen_inputs_usecase():
+        usecase = SolvePackingUseCase()
+        usecase.execute('test_batch', (3, 3), (6, 6), 1, False)
 
-    def datagen():
-        data_gen_service = DataGenService()
-        return data_gen_service.generate()
+        print('executed test_generate_shape_gen_inputs_usecase')
 
-    data = datagen()
-    visualisateur = VisualisationService()
-    visualisateur.set_shape_infos(data['rectSize'],data['rectOffset'],data['shape'],data['validShapes'],data['u'],data['l'])
-    visualisateur.draw_all_shape()
-    
-    print(data)
-    def packing(_data):
-        packing_service = PackingService()
-        return packing_service.solve(_data)
+    test_generate_shape_gen_inputs_usecase()
 
-    solution = packing(data)
-    print(solution)
-    
-    
-    visualisateur.draw_solution(solution['x'],solution['kind'])
-    plt.show()
-    
 
 if __name__ == "__main__":
     main()

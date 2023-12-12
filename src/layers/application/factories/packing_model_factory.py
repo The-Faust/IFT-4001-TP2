@@ -11,4 +11,4 @@ class PackingModelFactory:
         if files is not None:
             shape_gen_model_attributes['files'] = files
 
-        return PackingModel(files)
+        return PackingModel(**shape_gen_model_attributes)
