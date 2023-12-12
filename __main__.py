@@ -15,14 +15,17 @@ logging.getLogger().setLevel(logging.DEBUG)
 
 
 def main():
-    def test_generate_shape_gen_inputs_usecase():
-        usecase = SolvePackingUseCase()
-        usecase.execute('test_batch', (3, 3), (6, 6), 1, False)
-
-        print('executed test_generate_shape_gen_inputs_usecase')
-
-    test_generate_shape_gen_inputs_usecase()
-
+    
+    
+    usecase = SolvePackingUseCase()
+    solution,data = usecase.execute('test_batch', (3, 3), (6, 6), 1, False)
+    
+    visualisateur = VisualisationService()
+    visualisateur.set_shape_infos(data['rectSize'],data['rectOffset'],data['shape'],data['validShapes'],data['u'],data['l'])
+    visualisateur.draw_all_shape()
+    visualisateur.draw_solution(solution['x'],solution['kind'])
+    plt.show()
+    
 
 if __name__ == "__main__":
     main()

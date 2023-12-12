@@ -66,4 +66,4 @@ class SolvePackingUseCase:
 
         self.logger.debug(packing_solutions)
 
-        return []
+        return (packing_model_input_rows, packing_solutions)
