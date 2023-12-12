@@ -1,6 +1,7 @@
 import logging
 from os import listdir
 from pathlib import Path
+from matplotlib import pyplot as plt
 
 from minizinc.driver import Driver
 
@@ -23,8 +24,9 @@ def main():
 
     data = datagen()
     visualisateur = VisualisationService()
-    visualisateur.set_shape_infos(data['rectSize'],data['rectOffset'],data['shape'],data['validShapes'])
+    visualisateur.set_shape_infos(data['rectSize'],data['rectOffset'],data['shape'],data['validShapes'],data['u'],data['l'])
     visualisateur.draw_all_shape()
+    
     print(data)
     def packing(_data):
         packing_service = PackingService()
@@ -34,6 +36,8 @@ def main():
     print(solution)
     
     
+    visualisateur.draw_solution(solution['x'],solution['kind'])
+    plt.show()
     
 
 if __name__ == "__main__":
