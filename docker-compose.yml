@@ -6,6 +6,7 @@ services:
     tty: True
     volumes:
       - .:/app
+      - ./visualisation_files:/app/visualisation_files
     env_file:
       - ./env_files/.env
     links:

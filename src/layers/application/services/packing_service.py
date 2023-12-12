@@ -6,6 +6,7 @@ from minizinc import Solver, Instance, Result
 
 from src.layers.application.factories.packing_model_factory import PackingModelFactory
 from src.layers.domain.inputs import PackingModelInput
+from src.layers.domain.solutions import PackingModelSolution
 
 
 class PackingService:
@@ -18,7 +19,7 @@ class PackingService:
             packing_model_inputs: PackingModelInput,
             solver: str = 'chuffed',
             timeout: int = 600,
-    ) -> Result:
+    ) -> PackingModelSolution:
         solver = Solver.lookup(solver)
         model = self.packing_model_factory.make_packing_model()
         instance = Instance(solver, model)
@@ -36,7 +37,14 @@ class PackingService:
 
         solution = instance.solve(timeout=timedelta(timeout), free_search=True)
 
-        return solution
+        return PackingModelSolution(
+            objective=solution['objective'],
+            x=solution['x'],
+            kind=solution['kind'],
+            chosen_objects=solution['chosen_objects'],
+            chosen_objects_count=solution['chosen_objects_count'],
+            surface=solution['surface']
+        )
 
 
 
