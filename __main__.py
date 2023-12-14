@@ -30,6 +30,9 @@ def main():
     visualisateur.draw_solution(solution[0]['x'],solution[0]['kind'])
     plt.show()
     print("fin")
+    
+    with open(Path('visualisation_files', 'test.txt'), 'wt') as f:
+        f.write('test 1 2')
 
 if __name__ == "__main__":
     main()
