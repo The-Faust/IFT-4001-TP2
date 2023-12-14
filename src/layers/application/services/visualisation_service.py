@@ -1,3 +1,4 @@
+from pathlib import Path
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -161,3 +162,13 @@ class VisualisationService:
         for k,x in zip(_kind,_x):
             self.draw_shape(x[0],x[1],k,self.axSolution,line=True)
        
+    def export(self, name):
+        plt.figure(1)
+        plt.savefig(Path('visualisation_files', f'Data_{name}'))
+        plt.figure(2)
+        plt.savefig(Path('visualisation_files', f'Solution_{name}'))
+        plt.show()
+        plt.close()
+        
+        
+        
