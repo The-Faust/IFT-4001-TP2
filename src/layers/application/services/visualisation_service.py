@@ -1,3 +1,4 @@
+from pathlib import Path
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -34,7 +35,7 @@ class VisualisationService:
         dt = pd.DataFrame({'time': newTime, 'parameters': newParam, 'size': newSize})
         sns.lineplot(data=dt, x='size', y='time', hue='parameters')
         
-    def set_shape_infos(self,rect_size,rect_offset,shape,valid_shapes, x_lim=160, y_lim=90):
+    def set_shape_infos(self,rect_size,rect_offset,shape,valid_shapes,u,l, x_lim=160, y_lim=90):
         self.rect_size = rect_size
         self.rect_offset = rect_offset
         self.shape = shape
@@ -58,16 +59,40 @@ class VisualisationService:
         
         ax.set_aspect('equal')
         
-        self.ax = ax
+        self.axData = ax
+        self.figData = fig
+        
+        fig, ax = plt.subplots()
+        
+        xBox = u[0]-l[0]
+        yBox = u[1]-l[1]
+        major_ticks = np.arange(0, np.max([xBox,yBox])+1, 1)
+        ax.set_xticks(major_ticks)
+        ax.set_xticklabels([])
+        ax.set_yticks(major_ticks)
+        ax.set_yticklabels([])
+        ax.grid(which='both')
+        
+        ax.set_xlim([0,xBox])
+        ax.set_ylim([yBox,0])
+        
+        ax.set_aspect('equal')
+        
+        self.axSolution = ax
+        self.figSolution = fig
             
-    def draw_shape(self, x_offset, y_offset, shape_index):
+    def draw_shape(self, x_offset, y_offset, shape_index,ax, line=False):
         for rectangle_index in self.shape[shape_index-1]:
             rectangle_index = rectangle_index -1
             x_rect_offset = x_offset + self.rect_offset[rectangle_index][0]
             y_rect_offset = y_offset + self.rect_offset[rectangle_index][1]
             width = self.rect_size[rectangle_index][0]
             height = self.rect_size[rectangle_index][1]
-            self.ax.add_patch(Rectangle((x_rect_offset, y_rect_offset), width, height))
+            if line:
+                ax.add_patch(Rectangle((x_rect_offset, y_rect_offset), width, height,edgecolor='white',linewidth=5))
+            else:
+                ax.add_patch(Rectangle((x_rect_offset, y_rect_offset), width, height))
+            
             
     def max_x_shape(self,shape_index):
         max_x = 0
@@ -78,6 +103,15 @@ class VisualisationService:
         
         return max_x
     
+    def min_x_shape(self,shape_index):
+        min_x = np.inf
+        for rectangle_index in self.shape[shape_index-1]:
+            rectangle_index -= 1
+            if (x:= self.rect_offset[rectangle_index][0]) < min_x:
+                min_x = x
+        
+        return min_x
+    
     def max_y_shape(self,shape_index):
         max_y = 0
         for rectangle_index in self.shape[shape_index-1]:
@@ -87,26 +121,54 @@ class VisualisationService:
         
         return max_y
     
+    def min_y_shape(self,shape_index):
+        min_y = np.inf
+        for rectangle_index in self.shape[shape_index-1]:
+            rectangle_index -= 1
+            if (y:= self.rect_offset[rectangle_index][1]) < min_y:
+                min_y = y
+        
+        return min_y
+    
     def draw_all_shape(self):
         x_offset = 2
         y_offset = 2
-        list_y=[]
+        list_y=[0]
         for shape_indexes in self.valid_shapes:
-            shape_index = list(shape_indexes)[0]
-            max_x = self.max_x_shape(shape_index)
-            if x_offset+max_x > self.x_lim:
-                x_offset = 2
-                y_offset += np.max(list_y) + 2
-                list_y = []
-           
-            self.draw_shape(x_offset, y_offset, shape_index)
-            list_y.append(self.max_y_shape(shape_index))
-            x_offset += max_x +2
-                
-                
+            for shape_index in list(shape_indexes):
+                max_x = self.max_x_shape(shape_index)
+                min_x = self.min_x_shape(shape_index)
+                min_y = self.min_y_shape(shape_index)
+                if min_x != max_x :
+                    if x_offset+max_x > self.x_lim:
+                        x_offset = 2
+                        y_offset += np.max(list_y) + 2
+                        list_y = [0]
+            
+                    self.draw_shape(x_offset-min_x, y_offset-min_y, shape_index,self.axData)
+                    list_y.append(self.max_y_shape(shape_index))
+                    x_offset += max_x +2 - min_x
+            x_offset = 2
+            y_offset += np.max(list_y) + 2
+            list_y = [0]
+        
+        plt.figure(self.figData.number)
         plt.subplots_adjust(0,0.02,1,0.99)
-        plt.show()
+        
                 
-                
-        plt.subplots_adjust(0,0.02,1,0.99)
+        
+        
+    def draw_solution(self,_x,_kind):
+        for k,x in zip(_kind,_x):
+            self.draw_shape(x[0],x[1],k,self.axSolution,line=True)
+       
+    def export(self, name):
+        plt.figure(1)
+        plt.savefig(Path('visualisation_files', f'Data_{name}'))
+        plt.figure(2)
+        plt.savefig(Path('visualisation_files', f'Solution_{name}'))
         plt.show()
+        plt.close()
+        
+        
+        

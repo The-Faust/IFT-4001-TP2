@@ -160,3 +160,5 @@ cython_debug/
 .idea/
 
 env_files/*.env
+
+visualisation_files/*.png
