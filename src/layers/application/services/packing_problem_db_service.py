@@ -55,7 +55,7 @@ class PackingProblemDbService:
             .filter(PackingModelSolutionTable.packing_model_input_id == packing_model_input_id) \
             .all()
 
-        return out_rows
+        return [row.__dict__ for row in out_rows]
 
     def write_packing_model_inputs_to_table(
         self,
