@@ -16,7 +16,7 @@ def main():
     strdate = time.strftime("%Y-%m-%d_%H:%M:%S")
     batch_name = f"test_batch_{strdate}"
     usecase = SolvePackingUseCase()
-    data,solution = usecase.execute(batch_name, (3, 3), (6, 6), 1, False)
+    data,solution = usecase.execute(batch_name, (4, 4), (5, 5), 1, False)
     
     visualisateur = VisualisationService()
     visualisateur.set_shape_infos(data[0]['inputs'].rectSize,

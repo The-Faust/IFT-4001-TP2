@@ -80,18 +80,19 @@ class VisualisationService:
         
         self.axSolution = ax
         self.figSolution = fig
+
+    def get_cmap(self,n, name="hsv"):
+        return plt.cm.get_cmap(name, n)
+
             
-    def draw_shape(self, x_offset, y_offset, shape_index,ax, line=False):
+    def draw_shape(self, x_offset, y_offset, shape_index,ax,color = "blue"):
         for rectangle_index in self.shape[shape_index-1]:
             rectangle_index = rectangle_index -1
             x_rect_offset = x_offset + self.rect_offset[rectangle_index][0]
             y_rect_offset = y_offset + self.rect_offset[rectangle_index][1]
             width = self.rect_size[rectangle_index][0]
             height = self.rect_size[rectangle_index][1]
-            if line:
-                ax.add_patch(Rectangle((x_rect_offset, y_rect_offset), width, height,edgecolor='white',linewidth=5))
-            else:
-                ax.add_patch(Rectangle((x_rect_offset, y_rect_offset), width, height))
+            ax.add_patch(Rectangle((x_rect_offset, y_rect_offset), width, height,color=color))
             
             
     def max_x_shape(self,shape_index):
@@ -159,8 +160,9 @@ class VisualisationService:
         
         
     def draw_solution(self,_x,_kind):
-        for k,x in zip(_kind,_x):
-            self.draw_shape(x[0],x[1],k,self.axSolution,line=True)
+        cmap = self.get_cmap(len(_kind))
+        for i,(k,x) in enumerate(zip(_kind,_x)):
+            self.draw_shape(x[0],x[1],k,self.axSolution,cmap(i))
        
     def export(self, name):
         plt.figure(1)
