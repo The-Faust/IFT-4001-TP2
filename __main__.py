@@ -6,8 +6,6 @@ from matplotlib import pyplot as plt
 from minizinc.driver import Driver
 
 from src.layers.application.usecases.solve_packing_usecase import SolvePackingUseCase
-from src.layers.application.services.data_gen_service import DataGenService
-from src.layers.application.services.packing_service import PackingService
 from src.layers.application.services.visualisation_service import VisualisationService
 
 logging.basicConfig()
@@ -18,14 +16,20 @@ def main():
     
     
     usecase = SolvePackingUseCase()
-    solution,data = usecase.execute('test_batch', (3, 3), (6, 6), 1, False)
+    data,solution = usecase.execute('test_batch', (3, 3), (6, 6), 1, False)
     
     visualisateur = VisualisationService()
-    visualisateur.set_shape_infos(data['rectSize'],data['rectOffset'],data['shape'],data['validShapes'],data['u'],data['l'])
+    visualisateur.set_shape_infos(data[0]['inputs'].rectSize,
+                                  data[0]['inputs'].rectOffset,
+                                  data[0]['inputs'].shape,
+                                  data[0]['inputs'].validShapes,
+                                  data[0]['inputs'].u,
+                                  data[0]['inputs'].l
+                                  )
     visualisateur.draw_all_shape()
-    visualisateur.draw_solution(solution['x'],solution['kind'])
+    visualisateur.draw_solution(solution[0]['x'],solution[0]['kind'])
     plt.show()
-    
+    print("fin")
 
 if __name__ == "__main__":
     main()
