@@ -3,8 +3,7 @@ import math
 import random
 from datetime import timedelta
 from pathlib import Path
-from typing import Tuple, Union, List, Set, Dict, Iterable
-from uuid import uuid4
+from typing import Tuple, Union, List, Set, Dict
 
 from minizinc import Solver, Instance, Result
 from numpy.random import randint
@@ -31,7 +30,7 @@ class DataGenService:
         solver = Solver.lookup(solver)
         model = self.shape_gen_model_factory.make_data_gen_model(files)
 
-        #self.logger.debug(shape_gen_model_input)
+        self.logger.debug(shape_gen_model_input)
 
         bounding_box = shape_gen_model_input['bounding_box']
         n_shapes = shape_gen_model_input['n_shapes']
@@ -46,7 +45,7 @@ class DataGenService:
 
         solution = instance.solve(timeout=timedelta(timeout), free_search=True)
 
-        #self.logger.debug(solution)
+        self.logger.debug(solution)
 
         (n_objects, n_rect, n_shapes, rect_size, rect_offset, shape, valid_shapes, l, u) = self \
             .produce_packing_model_input(instance, solution)
@@ -62,7 +61,7 @@ class DataGenService:
             l=l, u=u
         )
 
-        #self.logger.debug(packing_model_input)
+        self.logger.debug(packing_model_input)
 
         return packing_model_input
 

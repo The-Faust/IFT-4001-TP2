@@ -1,8 +1,7 @@
 import logging
 from datetime import timedelta
-from typing import Dict
 
-from minizinc import Solver, Instance, Result
+from minizinc import Solver, Instance
 
 from src.layers.application.factories.packing_model_factory import PackingModelFactory
 from src.layers.domain.inputs import PackingModelInput

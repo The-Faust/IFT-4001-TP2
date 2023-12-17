@@ -33,7 +33,7 @@ class SolvePackingUseCase:
                 .randomly_generate_shape_model_input(min_bounding_box_limit, max_bounding_box_limit) for _ in range(n)
         ]
 
-        #self.logger.debug(shape_gen_input_dtos)
+        self.logger.debug(shape_gen_input_dtos)
 
         shape_gen_input_rows = self.packing_problem_db_service.write_shape_gen_model_inputs_to_table(
             batch_name=batch_name,
@@ -49,6 +49,7 @@ class SolvePackingUseCase:
             for row in shape_gen_input_rows
         ]
 
+        self.logger.info('packing model inputs were generated')
         self.logger.debug(packing_model_inputs)
 
         packing_model_input_rows = [
@@ -68,9 +69,6 @@ class SolvePackingUseCase:
             for row in packing_model_input_rows
         ]
 
-        # for packing_solution in packing_solutions:
-        #     self.logger.debug(packing_solution)
-
         packing_solution_rows = [
             self.packing_problem_db_service.write_packing_model_solution_to_table(
                 batch_name=batch_name,
@@ -83,6 +81,7 @@ class SolvePackingUseCase:
         ]
         packing_solution_rows = [row for input in packing_solution_rows for row in input]
 
+        self.logger.info('packing solutions were generated')
         self.logger.debug(packing_solution_rows)
 
         return packing_model_input_rows, packing_solution_rows
