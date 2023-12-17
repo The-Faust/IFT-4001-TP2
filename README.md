@@ -15,13 +15,13 @@ Pour reconstruire l'application suite à une modification du Dockerfile ou de la
 #### Si vous souhaitez voir les données sauvegardées dans les tables
 Vous pouvez lancer pgadmin avec la commande suivante `docker-compose up pgadmin`.
 Puis rendez-vous à l'url suivant [pgadmin](http://localhost:8888/)
-Vous pourrez vous connecter en utilisant l'e-mail admin@admin.com et le mot de passe root. Si c<est la première fois que vous exécutez pgadmin il se peut que cela prenne un certain temps.
+Vous pourrez vous connecter en utilisant l'e-mail admin@admin.com et le mot de passe root. Si c'est la première fois que vous exécutez pgadmin il se peut que cela prenne un certain temps.
 
-Par la suite vous devrez vous connecter à la base de données. En heut à gauche de la page faites un click droit sur le mot server
+Par la suite vous devrez vous connecter à la base de données. En haut à gauche de la page faites un click droit sur le mot server
 puis 
 * register -> server 
 * Nommez le serveur, nous recommandons de l'appeler ift-4001-tp2
-* allez dans l<onglet connection
+* allez dans l'onglet connection
 * le host name est postgres
 * le username est postgres
 * le mot de passe est postgres123
