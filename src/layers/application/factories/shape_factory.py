@@ -2,7 +2,6 @@ from typing import List, Set
 
 
 class ShapeFactory:
-    # Pourquoi on ne gère pas tout ça dans le modèle?
     def remove_duplicates(
         self,
         rect_size: List[List[int]],
@@ -10,18 +9,6 @@ class ShapeFactory:
         shapes: List[List[int]],
         valid_shapes: List[List[int]]
     ):
-        """
-
-        Args:
-            rect_size:
-            rect_offset:
-            shapes:
-            valid_shapes:
-
-        Returns:
-
-        """
-
         rect_to_delete: List[int] = []
 
         # TODO: This is .... not good we probably should try to refactor this so that there are less loops...

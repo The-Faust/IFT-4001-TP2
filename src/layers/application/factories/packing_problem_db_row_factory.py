@@ -85,7 +85,7 @@ class PackingProblemDbRowFactory:
         batch_id: uuid4,
         shape_gen_input_dtos: Iterable[ShapeGenInputDto]
     ) -> Iterable[ShapeGenModelInputTable]:
-        #self.logger.debug('calling method make_shape_gen_input_rows')
+        self.logger.debug('calling method make_shape_gen_input_rows')
 
         return (
             self.make_shape_gen_input_row(batch_name, batch_id, shape_gen_input_dto)
@@ -99,7 +99,7 @@ class PackingProblemDbRowFactory:
         batch_id: uuid4,
         shape_gen_input_object: ShapeGenInputDto
     ) -> ShapeGenModelInputTable:
-        #self.logger.debug('calling method make_shape_gen_input_row')
+        self.logger.debug('calling method make_shape_gen_input_row')
 
         (bounding_box, n_shapes, surface_per_shapes, rectangles_count_per_shape) = shape_gen_input_object
         inputs = dict(
@@ -117,6 +117,6 @@ class PackingProblemDbRowFactory:
             generation_time=datetime.now()
         )
 
-        #self.logger.debug(row_arguments)
+        self.logger.debug(row_arguments)
 
         return ShapeGenModelInputTable(**row_arguments)
