@@ -89,7 +89,7 @@ class PackingProblemDbService:
         write_to_db: bool
     ) -> Iterable[ShapeGenModelInputTable]:
         rows = self.row_factory.make_shape_gen_input_rows(batch_name, batch_id, shape_gen_input_dtos)
-        #self.logger.debug(rows)
+        self.logger.debug(rows)
         self.postgres_repository.add_rows(rows)
 
         if write_to_db:
